@@ -1,5 +1,5 @@
 
-# LinkPopOutExtension
+# LinkPopper
 
 ![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-blue?logo=googlechrome)
 ![Status](https://img.shields.io/badge/status-active-success)

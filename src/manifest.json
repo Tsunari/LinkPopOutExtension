@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Link Popout Extension",
+  "name": "LinkPopper",
   "version": "1.0",
   "description": "Open links in a popout modal with a keybind instead of a new tab.",
   "permissions": ["scripting", "storage"],
@@ -16,7 +16,7 @@
     }
   ],
   "action": {
-    "default_title": "Link Popout Extension",
+    "default_title": "LinkPopper",
     "default_popup": "popup.html"
   },
   "icons": {
