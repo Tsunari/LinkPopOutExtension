@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Link Popout Extension</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-width: 280px;
+      background: #f7f7fa;
+      color: #222;
+      box-sizing: border-box;
+    }
+    .container {
+      padding: 18px 16px 12px 16px;
+      max-width: 340px;
+    }
+    #current {
+      font-size: 16px;
+      margin-bottom: 10px;
+      font-weight: 500;
+      word-break: break-all;
+    }
+    #add-remove {
+      display: block;
+      width: 100%;
+      padding: 10px 0;
+      margin-bottom: 10px;
+      background: #4f8cff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #add-remove:hover {
+      background: #357ae8;
+    }
+    h4 {
+      margin: 16px 0 8px 0;
+      font-size: 15px;
+      color: #4f8cff;
+      font-weight: 600;
+    }
+    #blacklist {
+      max-height: 120px;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px #0001;
+      padding: 8px;
+      margin-bottom: 8px;
+    }
+    .domain-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px;
+      padding: 4px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .domain-item:last-child {
+      border-bottom: none;
+    }
+    .domain-item span {
+      flex: 1;
+      font-size: 14px;
+      color: #333;
+      word-break: break-all;
+    }
+    .domain-item button {
+      background: #f44336;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .domain-item button:hover {
+      background: #d32f2f;
+    }
+    #empty {
+      color: #888;
+      font-size: 13px;
+      text-align: center;
+      margin: 12px 0;
+    }
+    .fade {
+      animation: fadein 0.5s;
+    }
+    @keyframes fadein {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="current"></div>
+    <button id="add-remove"></button>
+    <h4>Blacklisted Domains</h4>
+    <div id="blacklist"></div>
+    <div id="empty" style="display:none;">No domains blacklisted.</div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

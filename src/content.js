@@ -41,6 +41,29 @@
 // Modal logic
 function showPopout(url) {
   if (document.querySelector('.link-popout-modal')) return;
+
+  // Get blacklist and check current domain
+  const domain = window.location.hostname;
+  chrome.storage.local.get(['blacklist'], result => {
+    const blacklist = result.blacklist || [];
+    if (blacklist.includes(domain)) {
+      // Open popup window for blacklisted domain
+      const w = Math.round(window.innerWidth * 0.8);
+      const h = Math.round(window.innerHeight * 0.8);
+      const left = Math.round(window.screenX + (window.innerWidth - w) / 2);
+      const top = Math.round(window.screenY + (window.innerHeight - h) / 2);
+      window.open(
+        url,
+        '_blank',
+        `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=no`
+      );
+      return;
+    }
+    // Show modal for non-blacklisted sites
+    createModal(url);
+  });
+
+function createModal(url) {
   const modal = document.createElement('div');
   modal.className = 'link-popout-modal';
 
@@ -65,6 +88,27 @@ function showPopout(url) {
     }
   }
   document.addEventListener('keydown', escListener);
+}
+
+function showSnackbar(msg) {
+  let snackbar = document.createElement('div');
+  snackbar.textContent = msg;
+  snackbar.style.position = 'fixed';
+  snackbar.style.bottom = '32px';
+  snackbar.style.left = '50%';
+  snackbar.style.transform = 'translateX(-50%)';
+  snackbar.style.background = '#323232';
+  snackbar.style.color = '#fff';
+  snackbar.style.padding = '12px 24px';
+  snackbar.style.borderRadius = '6px';
+  snackbar.style.zIndex = '100000';
+  snackbar.style.fontSize = '16px';
+  snackbar.style.boxShadow = '0 2px 8px #0003';
+  document.body.appendChild(snackbar);
+  setTimeout(() => {
+    snackbar.remove();
+  }, 3000);
+}
 }
 
 // Listen for Shift+Click on links
