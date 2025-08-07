@@ -1,0 +1,17 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="popoutGradient" x1="44" y1="44" x2="84" y2="84" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2962FF"/>
+      <stop offset="1" stop-color="#00B8D4"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="128" height="128" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect x="8" y="8" width="112" height="112" rx="24" fill="url(#popoutGradient)" stroke="#fff" stroke-width="6" filter="url(#shadow)"/>
+  <g>
+    <path d="M64 36 L64 100" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+    <path d="M64 100 L96 68" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+    <path d="M64 100 L32 68" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+  </g>
+</svg>
