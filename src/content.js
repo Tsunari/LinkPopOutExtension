@@ -44,24 +44,30 @@ function showPopout(url) {
 
   // Get blacklist and check current domain
   const domain = window.location.hostname;
-  chrome.storage.local.get(['blacklist'], result => {
-    const blacklist = result.blacklist || [];
-    if (blacklist.includes(domain)) {
-      // Open popup window for blacklisted domain
-      const w = Math.round(window.innerWidth * 0.8);
-      const h = Math.round(window.innerHeight * 0.8);
-      const left = Math.round(window.screenX + (window.innerWidth - w) / 2);
-      const top = Math.round(window.screenY + (window.innerHeight - h) / 2);
-      window.open(
-        url,
-        '_blank',
-        `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=no`
-      );
-      return;
-    }
-    // Show modal for non-blacklisted sites
-    createModal(url);
-  });
+  try {
+    chrome.storage.local.get(['blacklist'], result => {
+      const blacklist = result && result.blacklist ? result.blacklist : [];
+      if (blacklist.includes(domain)) {
+        // Open popup window for blacklisted domain
+        const w = Math.round(window.innerWidth * 0.8);
+        const h = Math.round(window.innerHeight * 0.8);
+        const left = Math.round(window.screenX + (window.innerWidth - w) / 2);
+        const top = Math.round(window.screenY + (window.innerHeight - h) / 2);
+        window.open(
+          url,
+          '_blank',
+          `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=no`
+        );
+        return;
+      }
+      // Show modal for non-blacklisted sites
+      createModal(url);
+    });
+  } catch (err) {
+    // Extension context invalidated or chrome.storage not available
+    // Optionally show a snackbar or just do nothing
+    showSnackbar('Extension context invalidated. This page may not support popout links. Please try again.');
+  }
 
 function createModal(url) {
   const modal = document.createElement('div');
@@ -87,7 +93,17 @@ function createModal(url) {
       document.removeEventListener('keydown', escListener);
     }
   }
-  document.addEventListener('keydown', escListener);
+  document.addEventListener('keydown', escListener, true);
+
+  // Close on Ctrl+X
+  function ctrlXListener(e) {
+    if ((e.ctrlKey || e.metaKey) && (e.key === 'x' || e.key === 'X')) {
+      e.preventDefault();
+      modal.remove();
+      document.removeEventListener('keydown', ctrlXListener);
+    }
+  }
+  document.addEventListener('keydown', ctrlXListener, true);
 }
 
 function showSnackbar(msg) {
